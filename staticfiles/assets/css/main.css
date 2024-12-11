@@ -1,0 +1,13 @@
+.brand-text {
+    display: none !important;
+}
+
+.brand-link .brand-image {
+    float: none !important;
+    max-height: 50px !important;
+    box-shadow: none !important;
+}
+
+.btn {
+    border-radius: 5px !important;
+}

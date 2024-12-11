@@ -15,6 +15,7 @@ from pathlib import Path
 import environ
 
 from core.jazzmin_conf import *  # noqa
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -47,12 +48,15 @@ DJANGO_APPS = [
 
 CUSTOM_APPS = [
     "apps.common",
+    "apps.portfolio",
 ]
 
 THIRD_PARTY_APPS = [
     "rest_framework",
     "drf_yasg",
     "corsheaders",
+    "django_filters",
+    "django_celery_beat",
 ]
 
 REST_FRAMEWORK = {
@@ -169,10 +173,14 @@ CACHES = {
 }
 
 # CELERY CONFIGURATION
-CELERY_BROKER_URL = env.str("CELERY_BROKER_URL", "redis://localhost:6379")
-CELERY_RESULT_BACKEND = env.str("CELERY_BROKER_URL", "redis://localhost:6379")
+CELERY_BROKER_URL = env.str("CELERY_BROKER_URL", "redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = env.str("CELERY_BROKER_URL", "redis://localhost:6379/0")
+
 
 CELERY_TIMEZONE = "Asia/Tashkent"
 
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
